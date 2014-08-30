@@ -46,8 +46,8 @@ def draw_prompt():
     Ask the player whether to draw a card or not
     """
     inp = ''
-    while int not in ('y', 'Y', 'N', 'n'):
-        inp = raw_input("Would you like to draw another card (Y/N)? ")
+    while inp not in ('y', 'Y', 'N', 'n'):
+        inp = input("Would you like to draw another card (Y/N)? ")
     return inp.lower() == 'y'
 
 
@@ -171,7 +171,6 @@ def check_outcome(phand, dhand, bet, balance):
     else:
         balance = player_won(bet, balance)
     return balance
-
 
 def deal_cards(shoe):
     """
