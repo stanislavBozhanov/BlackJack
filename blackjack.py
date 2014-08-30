@@ -6,20 +6,15 @@ from random import shuffle
 MIN_SHOE_LEN = 22
 DECK_IN_SHOE = 2
 
-
-def say(msg):
-    print msg
-
-
 def say_welcome(player="Player"):
-    say("Hello %s and Welcome to our Casino!" % player)
+    print("Hello %s and Welcome to our Casino!" % player)
 
 
 def init_round(rnd, balance):
     """
     Welcome message at the beginning of each round.
     """
-    say("Welcome to round number %s. Your balance is %.2f" % (rnd, balance))
+    print("Welcome to round number %s. Your balance is %.2f" % (rnd, balance))
 
 
 def init_shoe(num_decks=1):
@@ -31,7 +26,7 @@ def init_shoe(num_decks=1):
     cards = [x + y for x in ranks for y in suits] * num_decks
     assert len(cards) == num_decks * 52
     shuffle(cards)
-    print "Shuffled %s cards into the dealer shoe. Good luck!" % cards
+    print("Shuffled %s cards into the dealer shoe. Good luck!" % cards)
     return cards
 
 
@@ -91,12 +86,12 @@ def player_turn(hand, shoe):
     Run the player's turn
     """
     value = hand_score(hand)
-    print "Your current hand is {} with the value of {}".format(hand, value)
+    print("Your current hand is {} with the value of {}".format(hand, value))
     if value >= 21:
         return hand
     if draw_prompt():
         hand.append(shoe.pop())
-        print "You draw {}. Current hand: {}".format(hand[-1], hand)
+        print("You draw {}. Current hand: {}".format(hand[-1], hand))
         return player_turn(hand, shoe)
     return hand
 
@@ -109,28 +104,28 @@ def dealer_turn(hand, shoe):
     if value >= 17:
         return hand
     hand.append(shoe.pop())
-    print "Dealer drew {}. Current hand: {}".format(hand[-1], hand)
+    print("Dealer drew {}. Current hand: {}".format(hand[-1], hand))
     return dealer_turn(hand, shoe)
 
 
 def player_won(bet, balance):
     balance += bet * 2
-    print "You WON {}! Current balance: {}".format(bet, balance)
+    print("You WON {}! Current balance: {}".format(bet, balance))
     return balance
 
 
 def player_lost(bet, balance):
-    print "YOU LOST {}! Current balance: {}".format(bet, balance)
+    print("YOU LOST {}! Current balance: {}".format(bet, balance))
     return balance
 
 
 def player_broke(rnd):
-    print "You are BROKE after {} rounds of play. Get out of the casino!".format(rnd)
+    print("You are BROKE after {} rounds of play. Get out of the casino!".format(rnd))
 
 
 def draw(bet, balance):
     balance += bet
-    print "Draw - you got the same score as the dealer. Current balance: {}".format(bet, balance)
+    print("Draw - you got the same score as the dealer. Current balance: {}".format(bet, balance))
     return balance
 
 
@@ -140,20 +135,20 @@ def ask_for_bet(balance, min_bet):
     """
     assert min_bet < balance, "You don't have enough money to play"
     while True:
-        say("How much would you want to wager this time?")
+        print("How much would you want to wager this time?")
         try:
-            bet = raw_input(">>")  # if input is incorrect it will blow before we have a value for bet
+            bet = input() # if input is incorrect it will blow before we have a value for bet
             bet = float(bet)
             if bet > balance:  # if not (bet > min_bet and bet < balance)
-                say("You don't have that kind of money on your account!")
+                print("You don't have that kind of money on your account!")
             elif bet < 0:
-                say("Negative bets are not allowed you ... cheater!")
+                print("Negative bets are not allowed you ... cheater!")
             else:
                 balance -= bet
-                say("Bet of %.2f accepted!" % bet)
+                print("Bet of %.2f accepted!" % bet)
                 return bet, balance
-        except ValueError, e:
-            say("%s is not a valid bet! Please enter a floating point number." % bet)
+        except ValueError:
+            print("%s is not a valid bet! Please enter a floating point number." % bet)
 
 
 def check_outcome(phand, dhand, bet, balance):
