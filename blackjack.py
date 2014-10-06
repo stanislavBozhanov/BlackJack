@@ -101,7 +101,7 @@ def dealer_turn(hand, shoe):
     Run the dealer's turn.
     """
     value = hand_score(hand)
-    if value >= 17:
+    if value >= 16:
         return hand
     hand.append(shoe.pop())
     print("Dealer drew {}. Current hand: {}".format(hand[-1], hand))
@@ -198,5 +198,6 @@ if __name__ == "__main__":
         if len(shoe) < MIN_SHOE_LEN:
             shoe = init_shoe(DECK_IN_SHOE)
 
-    player_broke(rnd)
+    player_broke(rnd)       
 
+-
